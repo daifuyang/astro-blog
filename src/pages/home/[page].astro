@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+
+const pageSize = 10;
+
+export async function getStaticPaths(props: any) {
+	const {paginate} = props;
+	const blogEntries = await getCollection('blog');
+	return paginate(blogEntries, { pageSize: 10 });
+}
+
+interface Props {
+	page?: {
+		currentPage: number;
+		data: any[];
+	};
+}
+
+const blogPosts = await getCollection('blog');
+const defaultPosts = blogPosts.slice(0,pageSize)
+const { page = { currentPage: 1, data: defaultPosts } } = Astro.props;
+
+---
+<Layout title="首页-全栈成长指南">
+	<ul>
+		<!-- 列出宇航员信息数组 -->
+		{page.data.map((item: any) => <li>
+			<a href={`/posts/${item.slug}`}>
+				{item.data.title}
+			</a>
+		</li>)}
+	  </ul>
+
+</Layout>
