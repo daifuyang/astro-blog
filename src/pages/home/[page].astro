@@ -1,35 +1,66 @@
 ---
-import { getCollection } from 'astro:content';
-import Layout from '@/layouts/Layout.astro';
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
 
 const pageSize = 10;
 
 export async function getStaticPaths(props: any) {
-	const {paginate} = props;
-	const blogEntries = await getCollection('blog');
-	return paginate(blogEntries, { pageSize: 10 });
+  const { paginate } = props;
+  const blogEntries = await getCollection("blog");
+  return paginate(blogEntries, { pageSize: 10 });
 }
 
 interface Props {
-	page?: {
-		currentPage: number;
-		data: any[];
-	};
+  page?: {
+    currentPage: number;
+    data: any[];
+  };
 }
 
-const blogPosts = await getCollection('blog');
-const defaultPosts = blogPosts.slice(0,pageSize)
+const blogPosts = await getCollection("blog");
+const defaultPosts = blogPosts.slice(0, pageSize);
 const { page = { currentPage: 1, data: defaultPosts } } = Astro.props;
-
 ---
-<Layout title="首页-全栈成长指南">
-	<ul>
-		<!-- 列出宇航员信息数组 -->
-		{page.data.map((item: any) => <li>
-			<a href={`/posts/${item.slug}`}>
-				{item.data.title}
-			</a>
-		</li>)}
-	  </ul>
 
+<Layout title="首页-全栈成长指南">
+  <div class="flex max-w-7xl mx-auto mt-8">
+    <div class="flex-1 mr-11">
+      <ul class="flex flex-col gap-6">
+        <!-- 列出宇航员信息数组 -->
+        {
+          page.data.map((item: any) => {
+            return (
+              <li>
+                <a href={`/posts/${item.slug}`}>
+                  <article class="w-full flex flex-col border p-6 rounded-2xl bg-white">
+                    <div class="w-full flex flex-row gap-6 justify-between">
+                      <div class="flex flex-col gap-1">
+                        <h1 class="font-heading text-base sm:text-xl font-semibold sm:font-bold  text-slate-700 dark:text-slate-200 hn-break-words cursor-pointer">
+                          {item.data.title}
+                        </h1>
+                        <p class="text-base hidden font-normal text-slate-500 dark:text-slate-400 hn-break-words cursor-pointer md:line-clamp-2">
+                          {item.data.desc}
+                        </p>
+                      </div>
+                      <div class="w-full rounded-xl md:rounded-lg bg-gray-100 dark:bg-gray-900 relative cursor-pointer md:basis-[180px] md:h-[108px] md:shrink-0">
+                        <div class="w-full h-full overflow-hidden">
+                          <img
+                            class="w-full h-full object-cover"
+                            src="https://cdn.hashnode.com/res/hashnode/image/upload/v1722688856762/69e80236-c5d3-4a96-aff3-fa4927ff4d8f.png?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+
+    <div class="w-[340px]">1</div>
+  </div>
 </Layout>

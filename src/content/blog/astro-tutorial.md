@@ -1,5 +1,6 @@
 ---
 title: "利用astro快速搭建个人博客"
+desc: "还在为搭建个人博客而烦恼吗？快来学习astro吧！"
 date: 2023-04-23 12:14:00
 category: "astro"
 tags: ["astro"]
@@ -49,22 +50,28 @@ astro 支持多种内容的管理方式：内容集合、无头 CMS 等。本次
 
 ```ts
 const blogCollection = defineCollection({
-  type: 'content',
-  schema: z.object({ /* ... */ })
+  type: "content",
+  schema: z.object({
+    /* ... */
+  }),
 });
 const newsletter = defineCollection({
-  type: 'content',
-  schema: z.object({ /* ... */ })
+  type: "content",
+  schema: z.object({
+    /* ... */
+  }),
 });
 const authors = defineCollection({
-  type: 'data',
-  schema: z.object({ /* ... */ })
+  type: "data",
+  schema: z.object({
+    /* ... */
+  }),
 });
 
 export const collections = {
-  'blog': blogCollection,
-  'newsletter': newsletter,
-  'authors': authors,
+  blog: blogCollection,
+  newsletter: newsletter,
+  authors: authors,
 };
 ```
 
@@ -74,18 +81,21 @@ export const collections = {
 
 ```astro
 ---
-import { getCollection } from 'astro:content';
-const blogEntries = await getCollection('blog');
+import { getCollection } from "astro:content";
+const blogEntries = await getCollection("blog");
 ---
+
 <ul>
-  {blogEntries.map(blogPostEntry => (
-    <li>
-      <a href={`/blogs/${blogPostEntry.slug}`}>{blogPostEntry.data.title}</a>
-      <time datetime={blogPostEntry.data.publishedDate.toISOString()}>
-        {blogPostEntry.data.publishedDate.toDateString()}
-      </time>
-    </li>
-  ))}
+  {
+    blogEntries.map((blogPostEntry) => (
+      <li>
+        <a href={`/blogs/${blogPostEntry.slug}`}>{blogPostEntry.data.title}</a>
+        <time datetime={blogPostEntry.data.publishedDate.toISOString()}>
+          {blogPostEntry.data.publishedDate.toDateString()}
+        </time>
+      </li>
+    ))
+  }
 </ul>
 ```
 
@@ -95,18 +105,20 @@ const blogEntries = await getCollection('blog');
 
 ```astro
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 // 1. 为每个集合条目生成一个新路径
 export async function getStaticPaths() {
-  const blogEntries = await getCollection('blog');
-  return blogEntries.map(entry => ({
-    params: { slug: entry.slug }, props: { entry },
+  const blogEntries = await getCollection("blog");
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
   }));
 }
 // 2. 当渲染的时候，你可以直接从属性中得到条目
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
+
 <h1>{entry.data.title}</h1>
 <Content />
 ```
@@ -135,10 +147,10 @@ export default {
     // ...
   },
   plugins: [
-   require('@tailwindcss/typography'),
+    require("@tailwindcss/typography"),
     // ...
   ],
-}
+};
 ```
 
 **创建消费组件**
@@ -147,9 +159,12 @@ export default {
 
 ```astro
 ---
+
 ---
+
 <div
-  class="prose prose-lg sm:prose-base md:prose-base lg:prose-lg dark:prose-invert mx-auto">
+  class="prose prose-lg sm:prose-base md:prose-base lg:prose-lg dark:prose-invert mx-auto"
+>
   <slot />
 </div>
 ```
@@ -159,13 +174,14 @@ export default {
 
 ```astro
 ---
-import Prose from '../components/Prose.astro';
-import Layout from '../layouts/Layout.astro';
-import { getEntry } from 'astro:content';
+import Prose from "../components/Prose.astro";
+import Layout from "../layouts/Layout.astro";
+import { getEntry } from "astro:content";
 
-const entry = await getEntry('collection', 'entry');
+const entry = await getEntry("collection", "entry");
 const { Content } = await entry.render();
 ---
+
 <Layout>
   <Prose>
     <Content />
