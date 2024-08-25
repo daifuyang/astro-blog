@@ -1,3 +1,7 @@
 {
-    "prettier.configPath": "D:\\learn\\astro\\astro-blog\\.prettierrc.mjs"
+  "prettier.configPath": "D:\\learn\\astro\\astro-blog\\.prettierrc.mjs",
+  "prettier.documentSelectors": ["**/*.astro"],
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

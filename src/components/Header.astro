@@ -1,21 +1,23 @@
 ---
 import { menuItems } from "@/const";
-const linkClass = "block px-6 py-4 text-slate-700 hover:text-slate-900";
+const linkClass = "block p-4 text-sm font-medium";
 const leftRightWidth = "w-40";
 ---
 
-<header class="bg-slate-50 border-b">
-  <div class="flex items-center max-w-7xl mx-auto">
+<header class="bg-white border-b">
+  <div class="flex items-center container mx-auto">
     <div class={leftRightWidth}>
-      <h1 class="text-slate-900 font-bold">LOGO</h1>
+      <h1 class="font-semibold text-lg">
+        <a href="#">My Blog</a>
+      </h1>
     </div>
     <nav class="flex-1">
-      <ul class="flex gap-x-12 justify-center">
+      <ul class="flex gap-x-4 justify-center">
         {
           menuItems.map((item) => {
             return (
               <li>
-                <a class={linkClass} href="">
+                <a class={linkClass} href={item.link}>
                   {item.title}
                 </a>
               </li>
