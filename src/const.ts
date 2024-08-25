@@ -1,19 +1,23 @@
 export const menuItems = [
   {
-    title: "nextjs",
-    link: "/nextjs",
+    title: "首页",
+    link: "/",
   },
   {
-    title: "astro",
-    link: "/astro",
+    title: "专栏",
+    link: "/column",
   },
   {
-    title: "koa",
-    link: "/koa",
+    title: "导航",
+    link: "/navigation",
   },
   {
-    title: "golang",
-    link: "/golang",
+    title: "服务",
+    link: "/service",
+  },
+  {
+    title: "关于",
+    link: "/about",
   },
   {
     title: "更多",
